@@ -10,21 +10,21 @@
 #### 세부 사항
 * 기술 요건
   * Java 8
-  * H2Database
+  * Database
+  * jdbc driver
 
 * 개발 요건
-  * Database connection Pool 을 구현합니다.
-  * H2 Database 에 User 테이블을 생성합니다.
+  * Database connection Pool 을 직접 구현합니다.
+  * Database 에 User 테이블을 생성합니다.
   * User 테이블은 id, name, created_date 필드가 있습니다.
   * 각 필드(컬럼) 의 type과 size는 자유 입니다.
 
 #### 구현 내용
   * Connection Pool
     * Pool을 통해 Database connection을 미리 생성합니다. size 는 자유 입니다.
-  * 사용자 등록 서비스
-    * DB User 테이블에 사용자를 등록하는 서비스를 구현합니다.
-    * 사용자 등록시 connection 을 open하고, close 하는 코드가 있어야 합니다.
-    * 사용자 등록간 오류 발생시 transaction에 의해 rollback 되는 코드가 있어야 합니다.
-    * 사용자 등록이 완료되는 commit 처리되는 코드가 있어야 합니다.
-  * 사용자 등록 서비스 테스트
-    * rollback 과 commit 에 대한 테스트를 구현합니다.
+  * User CRUD 서비스 구현
+    * DB User 테이블에 사용자 정보에 대한 CRUD 서비스를 구현합니다.
+    * DB 처리중 오류 발생시 transaction에 의해 rollback 되는 코드가 있어야 합니다.
+    * DB 처리 후, commit 코드가 있어야 합니다.
+  * 테스트
+    * CRUD 서비스에 대한 테스트를 실행합니다.
