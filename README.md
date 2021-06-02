@@ -10,7 +10,7 @@
 #### 세부 사항
 * 기술 요건
   * Java 8
-  * Database
+  * Database (DB 종류는 무관합니다만 H2 추천합니다)
   * jdbc driver
 
 * 개발 요건
@@ -27,4 +27,4 @@
     * DB 처리중 오류 발생시 transaction에 의해 rollback 되는 코드가 있어야 합니다.
     * DB 처리 후, commit 코드가 있어야 합니다.
   * 테스트
-    * CRUD 서비스에 대한 테스트를 실행합니다.
+    * CRUD 서비스에 대한 테스트 코드를 작성 합니다.
