@@ -1,30 +1,49 @@
-## ì„œë²„ ê°œë°œìž ê³¼ì œ
+## Spring boot + H2 ÀÌ¿ëÇÑ CRUD
 
-#### ì•ˆë‚´
-* ì§„í–‰ ë°©ë²•
-  * ì´ ì €ìž¥ì†Œë¥¼ í¬í¬í•´ ì£¼ì„¸ìš”. 
-  * ê³¼ì œ ì™„ë£Œ í›„ `main` ë¸Œëžœì¹˜ë¡œ í’€ ë¦¬í€˜ìŠ¤íŠ¸í•©ë‹ˆë‹¤.
-  * ë¦¬ë·°ì–´ëŠ” `seokhoon`ì„ ì§€ì •í•´ ì£¼ì„¸ìš”.
-  * ê³¼ì œ ê´€ë ¨í•´ ê¶ê¸ˆí•œ ì ì€ ë©”ì¼(seokhoon@huray.net)ë¡œ ë¬¸ì˜ ë°”ëžë‹ˆë‹¤.
+|±â¼ú ¿ä°Ç|
+|----------------|
+|Java 8|
+|H2 Databse|
+|jdbc driver|
+|                |
 
-#### ì„¸ë¶€ ì‚¬í•­
-* ê¸°ìˆ  ìš”ê±´
-  * Java 8
-  * Database (DB ì¢…ë¥˜ëŠ” ë¬´ê´€í•©ë‹ˆë‹¤ë§Œ H2 ì¶”ì²œí•©ë‹ˆë‹¤)
-  * jdbc driver
+> DB Ã³¸®Áß transaction ¿¡ ´ëÇÑ rollback, commit Àº `@Transactional` »ç¿ë.
 
-* ê°œë°œ ìš”ê±´
-  * Database connection Pool ì„ ì§ì ‘ êµ¬í˜„í•©ë‹ˆë‹¤.
-  * Database ì— User í…Œì´ë¸”ì„ ìƒì„±í•©ë‹ˆë‹¤.
-  * User í…Œì´ë¸”ì€ id, name, created_date í•„ë“œê°€ ìžˆìŠµë‹ˆë‹¤.
-  * ê° í•„ë“œ(ì»¬ëŸ¼) ì˜ typeê³¼ sizeëŠ” ìžìœ  ìž…ë‹ˆë‹¤.
+ÀÌ ¾î³ëÅ×ÀÌ¼ÇÀ» Å×½ºÆ®ÄÉÀÌ½º¿¡ ´Þ¸é Å×½ºÆ®¸¦ ½ÇÇàÇÒ ¶§ Æ®·£Àè¼ÇÀ» ½ÇÇàÇÏ°í,
+DB ¿¡ µ¥ÀÌÅÍ¸¦ INSERT ¸¦ ÇÏ°í Å×½ºÆ®¸¦ Á¾·áÇÒ ¶§ rollback() Ã³¸® ÇÔ.
 
-#### êµ¬í˜„ ë‚´ìš©
-  * Connection Pool
-    * Poolì„ í†µí•´ Database connectionì„ ë¯¸ë¦¬ ìƒì„±í•©ë‹ˆë‹¤. size ëŠ” ìžìœ  ìž…ë‹ˆë‹¤.
-  * User CRUD ì„œë¹„ìŠ¤ êµ¬í˜„
-    * DB User í…Œì´ë¸”ì— ì‚¬ìš©ìž ì •ë³´ì— ëŒ€í•œ CRUD ì„œë¹„ìŠ¤ë¥¼ êµ¬í˜„í•©ë‹ˆë‹¤.
-    * DB ì²˜ë¦¬ì¤‘ ì˜¤ë¥˜ ë°œìƒì‹œ transactionì— ì˜í•´ rollback ë˜ëŠ” ì½”ë“œê°€ ìžˆì–´ì•¼ í•©ë‹ˆë‹¤.
-    * DB ì²˜ë¦¬ í›„, commit ì½”ë“œê°€ ìžˆì–´ì•¼ í•©ë‹ˆë‹¤.
-  * í…ŒìŠ¤íŠ¸
-    * CRUD ì„œë¹„ìŠ¤ì— ëŒ€í•œ í…ŒìŠ¤íŠ¸ ì½”ë“œë¥¼ ìž‘ì„± í•©ë‹ˆë‹¤.
+------------
+> Å×½ºÆ®ÄÚµå /hurayUser/src/main/java/com/iamcujo/hurayUser/controller/BoardControllerTest.java
+------------
+#### USER Å×ÀÌºí »ý¼º SQL
+`CREATE TABLE USER
+( "ID" NUMBER(8) PRIMARY KEY,
+  "NAME" VARCHAR2(16),
+  "CREATED_DATE" VARCHAR(14)
+);`
+
+`CREATE SEQUENCE id
+START WITH 1
+INCREMENT BY 1
+NOMAXVALUE
+NOMINVALUE;`
+
+------------
+> CRUD Å×½ºÆ®½Ã POSTMAN »ç¿ë °¡ÀÌµå
+
+##### Á¶È¸
+(GET) http://localhost:8080/api/board/
+##### »ó¼¼Á¶È¸
+(GET) http://localhost:8080/api/board/{id}
+##### µî·Ï
+(POST) http://localhost:8080/api/board
+{
+"name"  :  "È«±æµ¿"
+}
+##### ¼öÁ¤
+(POST) http://localhost:8080/api/board/{¼öÁ¤ÇÏ·Á´Âid}
+{
+"name"  :  "º¯°æÇÏ·Á´ÂÀÌ¸§"
+}
+##### »èÁ¦
+(DELETE) http://localhost:8080/api/board/{»èÁ¦ÇÏ·Á´Âid}
